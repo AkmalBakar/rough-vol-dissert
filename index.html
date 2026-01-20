@@ -8,38 +8,102 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
   <style>
+    /* ===== Light Theme (Default) ===== */
     :root {
       --theme-color: #D97757;
+      --bg-color: #FAF9F7;
       --text-color: #1a1a1a;
+      --text-secondary: #4a4a4a;
       --sidebar-bg: #F5F4F0;
-      --sidebar-nav-link-color: #4a4a4a;
+      --border-color: #E8E6E1;
+      --code-bg: #F5F4F0;
+      --pre-bg: #2D2D2D;
+      --scrollbar-track: #F5F4F0;
+      --scrollbar-thumb: #D9D8D4;
     }
 
+    /* ===== Dark Theme (System Preference) ===== */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --theme-color: #E08B6D;
+        --bg-color: #1C1B1A;
+        --text-color: #E8E6E1;
+        --text-secondary: #A8A5A0;
+        --sidebar-bg: #252422;
+        --border-color: #3D3A37;
+        --code-bg: #2D2B29;
+        --pre-bg: #1C1B1A;
+        --scrollbar-track: #252422;
+        --scrollbar-thumb: #3D3A37;
+      }
+
+      body {
+        background-color: var(--bg-color);
+        color: var(--text-color);
+      }
+
+      .markdown-section {
+        color: var(--text-color);
+      }
+
+      .markdown-section h1,
+      .markdown-section h2,
+      .markdown-section h3,
+      .markdown-section h4 {
+        color: var(--text-color);
+      }
+
+      .markdown-section pre code {
+        color: #E8E6E1;
+      }
+
+      .search input {
+        background-color: var(--sidebar-bg) !important;
+        color: var(--text-color) !important;
+        border-color: var(--border-color) !important;
+      }
+
+      .search .matching-post {
+        background-color: var(--sidebar-bg);
+        border-color: var(--border-color);
+      }
+
+      .search .matching-post .search-result-title {
+        color: var(--text-color);
+      }
+
+      /* KaTeX dark mode */
+      .katex {
+        color: var(--text-color);
+      }
+    }
+
+    /* ===== Base Styles ===== */
     body {
-      background-color: #FAF9F7;
+      background-color: var(--bg-color);
     }
 
     .sidebar {
-      background-color: #F5F4F0;
-      border-right: 1px solid #E8E6E1;
+      background-color: var(--sidebar-bg);
+      border-right: 1px solid var(--border-color);
     }
 
     .sidebar-nav a {
-      color: #4a4a4a;
+      color: var(--text-secondary);
     }
 
     .sidebar-nav a:hover,
     .sidebar-nav a.active {
-      color: #D97757;
+      color: var(--theme-color);
     }
 
     .sidebar-nav li.active > a {
-      color: #D97757;
-      border-right: 3px solid #D97757;
+      color: var(--theme-color);
+      border-right: 3px solid var(--theme-color);
     }
 
     .app-name-link {
-      color: #D97757 !important;
+      color: var(--theme-color) !important;
       font-weight: 600;
     }
 
@@ -51,16 +115,16 @@
     .markdown-section h2,
     .markdown-section h3,
     .markdown-section h4 {
-      color: #1a1a1a;
+      color: var(--text-color);
     }
 
     .markdown-section h1 {
-      border-bottom: 2px solid #D97757;
+      border-bottom: 2px solid var(--theme-color);
       padding-bottom: 10px;
     }
 
     .markdown-section a {
-      color: #D97757;
+      color: var(--theme-color);
     }
 
     .markdown-section a:hover {
@@ -68,20 +132,20 @@
     }
 
     .markdown-section code {
-      background-color: #F5F4F0;
-      color: #D97757;
+      background-color: var(--code-bg);
+      color: var(--theme-color);
       border-radius: 4px;
       padding: 2px 6px;
     }
 
     .markdown-section pre {
-      background-color: #2D2D2D;
+      background-color: var(--pre-bg);
       border-radius: 8px;
     }
 
     .markdown-section blockquote {
-      border-left: 4px solid #D97757;
-      background-color: #F5F4F0;
+      border-left: 4px solid var(--theme-color);
+      background-color: var(--code-bg);
       padding: 12px 20px;
       margin: 1em 0;
     }
@@ -91,16 +155,16 @@
       height: 16px;
       margin-right: 8px;
       cursor: pointer;
-      accent-color: #D97757;
+      accent-color: var(--theme-color);
     }
 
     .search input {
-      border: 1px solid #E8E6E1 !important;
+      border: 1px solid var(--border-color) !important;
       background-color: #FFFFFF !important;
     }
 
     .search input:focus {
-      border-color: #D97757 !important;
+      border-color: var(--theme-color) !important;
       box-shadow: 0 0 0 2px rgba(217, 119, 87, 0.2) !important;
     }
 
@@ -110,21 +174,31 @@
     }
 
     ::-webkit-scrollbar-track {
-      background: #F5F4F0;
+      background: var(--scrollbar-track);
     }
 
     ::-webkit-scrollbar-thumb {
-      background: #D9D8D4;
+      background: var(--scrollbar-thumb);
       border-radius: 4px;
     }
 
     ::-webkit-scrollbar-thumb:hover {
-      background: #D97757;
+      background: var(--theme-color);
+    }
+
+    /* KaTeX math styling */
+    .katex-display {
+      margin: 1em 0;
+      overflow-x: auto;
+      overflow-y: hidden;
     }
   </style>
 </head>
 <body>
   <div id="app"></div>
+  <!-- KaTeX CSS - load early -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"/>
+
   <script>
     window.$docsify = {
       name: 'Dissertation Notes',
@@ -135,15 +209,20 @@
         placeholder: 'Search',
         noData: 'No results',
         depth: 3
+      },
+      latex: {
+        inlineMath: [['$', '$']],
+        displayMath: [['$$', '$$']]
       }
     }
   </script>
+  <!-- KaTeX library -->
+  <script src="//cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
   <!-- Docsify -->
   <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
   <!-- Search plugin -->
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
-  <!-- KaTeX for math -->
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css"/>
-  <script src="//cdn.jsdelivr.net/npm/docsify-katex@latest/dist/docsify-katex.js"></script>
+  <!-- Math rendering plugin that processes before markdown -->
+  <script src="//cdn.jsdelivr.net/npm/docsify-latex@0"></script>
 </body>
 </html>
